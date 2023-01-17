@@ -1,0 +1,35 @@
+@import "mixin";
+@import "antd";
+/* 自定义全局 CssVar */
+:root {
+  @include scrollBar;
+  --pure-transition-duration: 0.016s;
+}
+
+/* 灰色模式 */
+.html-grey {
+  filter: grayscale(100%);
+}
+
+/* 色弱模式 */
+.html-weakness {
+  filter: invert(80%);
+}
+
+$color:#FFFFFF;
+
+body{
+  background-color: $color;
+  // 禁用文字选中
+  user-select: none;
+}
+
+img{
+  // 禁止拖动图片
+  -webkit-user-drag: none;
+}
+
+.text-align-last {
+  text-align-last: justify;
+  width: 60px;
+}
