@@ -7,7 +7,7 @@ type RouteProps = {
 }
 const loginRoute = '/login'
 const indexRoute = '/'
-const allowList = ['/login']
+const allowList = ['/login', '/register']
 
 const AuthRoute: React.FC<RouteProps> = (props) => {
     const location = useLocation();

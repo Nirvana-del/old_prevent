@@ -1,33 +1,18 @@
 import React from 'react'
 import {Divider, Popover, theme} from "antd";
 import {css} from "@emotion/css";
-import {CaretDownFilled, DoubleRightOutlined} from "@ant-design/icons";
 
 const Item: React.FC<{ children: React.ReactNode }> = (props) => {
     const {token} = theme.useToken();
     return (
         <div
-            className={css`
-              color: ${token.colorTextSecondary};
-              font-size: 14px;
-              cursor: pointer;
-              line-height: 22px;
-              margin-bottom: 8px;
-
-              &:hover {
-                color: ${token.colorPrimary};
-              }
-            `}
+            className={`w-1/3 text-sm cursor-pointer mb-2`}
             style={{
-                width: '33.33%',
+                color: token.colorTextSecondary,
             }}
         >
             {props.children}
-            <DoubleRightOutlined
-                style={{
-                    marginInlineStart: 4,
-                }}
-            />
+            <i className="ri-arrow-right-s-line"></i>
         </div>
     );
 };
@@ -51,12 +36,7 @@ const List: React.FC<{ title: string; style?: React.CSSProperties }> = (props) =
             >
                 {props.title}
             </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                }}
-            >
+            <div className='flex flex-wrap'>
                 {new Array(6).fill(1).map((_, index) => {
                     return <Item key={index}>具体的解决方案-{index}</Item>;
                 })}
@@ -110,11 +90,11 @@ const MenuCard:React.FC = () => {
                             }}
                         >
                             <div
-                                className={css`
-                                  font-size: 14px;
-                                  color: ${token.colorText};
-                                  line-height: 22px;
-                                `}
+                                // className={css`
+                                //   font-size: 14px;
+                                //   color: ${token.colorText};
+                                //   line-height: 22px;
+                                // `}
                             >
                                 热门产品
                             </div>
@@ -122,17 +102,17 @@ const MenuCard:React.FC = () => {
                                 return (
                                     <div
                                         key={index}
-                                        className={css`
-                                          border-radius: 4px;
-                                          padding: 16px;
-                                          margin-top: 4px;
-                                          display: flex;
-                                          cursor: pointer;
-
-                                          &:hover {
-                                            background-color: ${token.colorBgTextHover};
-                                          }
-                                        `}
+                                        // className={css`
+                                        //   border-radius: 4px;
+                                        //   padding: 16px;
+                                        //   margin-top: 4px;
+                                        //   display: flex;
+                                        //   cursor: pointer;
+                                        //
+                                        //   &:hover {
+                                        //     background-color: ${token.colorBgTextHover};
+                                        //   }
+                                        // `}
                                     >
                                         <img
                                             src="https://gw.alipayobjects.com/zos/antfincdn/6FTGmLLmN/bianzu%25252013.svg" alt={'img'}/>
@@ -142,20 +122,20 @@ const MenuCard:React.FC = () => {
                                             }}
                                         >
                                             <div
-                                                className={css`
-                                                  font-size: 14px;
-                                                  color: ${token.colorText};
-                                                  line-height: 22px;
-                                                `}
+                                                // className={css`
+                                                //   font-size: 14px;
+                                                //   color: ${token.colorText};
+                                                //   line-height: 22px;
+                                                // `}
                                             >
                                                 Ant Design
                                             </div>
                                             <div
-                                                className={css`
-                                                  font-size: 12px;
-                                                  color: ${token.colorTextSecondary};
-                                                  line-height: 20px;
-                                                `}
+                                                // className={css`
+                                                //   font-size: 12px;
+                                                //   color: ${token.colorTextSecondary};
+                                                //   line-height: 20px;
+                                                // `}
                                             >
                                                 杭州市较知名的 UI 设计语言
                                             </div>
@@ -178,14 +158,14 @@ const MenuCard:React.FC = () => {
                         paddingInlineEnd: 12,
                         alignItems: 'center',
                     }}
-                    className={css`
-                      &:hover {
-                        background-color: ${token.colorBgTextHover};
-                      }
-                    `}
+                    // className={css`
+                    //   &:hover {
+                    //     background-color: ${token.colorBgTextHover};
+                    //   }
+                    // `}
                 >
                     <span> 企业级资产中心</span>
-                    <CaretDownFilled/>
+                    <i className="ri-arrow-down-s-fill"></i>
                 </div>
             </Popover>
         </div>

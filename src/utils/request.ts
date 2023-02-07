@@ -4,7 +4,9 @@ import {message} from "antd";
 // import { store } from '@/redux'
 // import Cookie from "js-cookie";
 const request  = axios.create({
-    baseURL:'http://47.97.208.219:8087',
+    // baseURL:'http://47.97.208.219:8087',
+    baseURL:'/api',
+    // baseURL:'/api',
     timeout:5000,
     headers: { 'Content-Type': 'application/json' }
 })

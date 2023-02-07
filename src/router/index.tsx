@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react'
 import NProgress from "nprogress"
-import Login from "@/pages/Login";
+import UserLogin from "@/pages/Login/UserLogin";
 import {Navigate, useRoutes} from "react-router-dom";
 import Home from "@/pages/Home";
 import Layout from "@/layout";
-import UserSetting from "@/pages/User/UserSetting";
-import Welcome from "@/pages/Welcome";
+import Index from "@/pages/User/UserSetting";
+// import Welcome from "@/pages/Welcome";
 import UserCenter from "@/pages/User/UserCenter";
+import User from "@/pages/User";
+import UserRegister from "@/pages/Login/UserRegister";
 export interface RoutePath {
   path: string,
   element?: React.ReactNode,
@@ -20,11 +22,15 @@ const AppRouter: React.FC = () => {
   let staticRoutes:RoutePath[] = [
     {
       path: '/login',
-      element: <Login/>
+      element: <UserLogin/>
+    },
+    {
+      path: '/register',
+      element: <UserRegister/>
     },
     {
       path: '/',
-      element: <Navigate to="/welcome"></Navigate>
+      element: <Navigate to="/home"></Navigate>
     },
     {
       path: '/',
@@ -34,12 +40,13 @@ const AppRouter: React.FC = () => {
           path: 'home',
           element: <Home />
         },
-        {
-          path: 'welcome',
-          element: <Welcome />
-        },
+        // {
+        //   path: 'welcome',
+        //   element: <Welcome />
+        // },
         {
           path: 'user',
+          element: <User />,
           children: [
             {
               path: 'center',
@@ -47,7 +54,7 @@ const AppRouter: React.FC = () => {
             },
             {
               path: 'setting',
-              element: <UserSetting />,
+              element: <Index />,
             }
           ]
         }

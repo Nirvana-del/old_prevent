@@ -1,7 +1,6 @@
 import React from 'react'
 import {ProFormCaptcha, ProFormRadio, ProFormText} from "@ant-design/pro-components";
-import {LockOutlined, MobileOutlined, UserOutlined} from "@ant-design/icons";
-import {PHONE_NUMBER_RULE} from "@/pages/Login/constant";
+import {PHONE_NUMBER_RULE} from "@/constant";
 import {message} from "antd";
 
 type loginWayProps = {
@@ -18,13 +17,13 @@ const loginWay: React.FC<loginWayProps> = (props) => {
                         name="username"
                         fieldProps={{
                             size: 'large',
-                            prefix: <UserOutlined className={'prefixIcon'}/>,
+                            prefix: <i className="ri-user-line"></i>,
                         }}
-                        placeholder={'用户名:'}
+                        placeholder={'手机号码:'}
                         rules={[
                             {
                                 required: true,
-                                message: '请输入用户名!',
+                                message: '请输入手机号码',
                             }
                         ]}
                     />
@@ -32,27 +31,33 @@ const loginWay: React.FC<loginWayProps> = (props) => {
                         name="password"
                         fieldProps={{
                             size: 'large',
-                            prefix: <LockOutlined className={'prefixIcon'}/>,
+                            prefix: <i className="ri-lock-line"></i>,
                         }}
                         placeholder={'密码:'}
                         rules={[
                             {
                                 required: true,
-                                message: '请输入密码！',
+                                message: '请输入密码',
                             },
                         ]}
                     />
                     <ProFormRadio.Group
                         name="type"
                         label="您的身份："
+                        rules={[
+                            {
+                                required: true,
+                                message: '请选择身份',
+                            },
+                        ]}
                         options={[
                             {
                                 label: '老人',
-                                value: 0,
+                                value: 1,
                             },
                             {
                                 label: '家属',
-                                value: 1,
+                                value: 2,
                             }
                         ]}
                     />
@@ -63,25 +68,25 @@ const loginWay: React.FC<loginWayProps> = (props) => {
                     <ProFormText
                         fieldProps={{
                             size: 'large',
-                            prefix: <MobileOutlined className={'prefixIcon'}/>,
+                            prefix: <i className="ri-smartphone-line"></i>,
                         }}
                         name="mobile"
                         placeholder={'手机号'}
                         rules={[
                             {
                                 required: true,
-                                message: '请输入手机号！',
+                                message: '请输入手机号',
                             },
                             {
                                 pattern: PHONE_NUMBER_RULE,
-                                message: '手机号格式错误！',
+                                message: '手机号格式错误',
                             },
                         ]}
                     />
                     <ProFormCaptcha
                         fieldProps={{
                             size: 'large',
-                            prefix: <LockOutlined className={'prefixIcon'}/>,
+                            prefix: <i className="ri-lock-line"></i>,
                         }}
                         captchaProps={{
                             size: 'large',
@@ -97,7 +102,7 @@ const loginWay: React.FC<loginWayProps> = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: '请输入验证码！',
+                                message: '请输入验证码',
                             },
                         ]}
                         onGetCaptcha={async () => {

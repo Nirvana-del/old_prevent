@@ -10,14 +10,13 @@ import {remove_UserInfo, set_Token, set_UserInfo} from "@/utils/handleToken";
 import {useNavigate} from "react-router-dom";
 import {reqFmLogin, reqOldLogin} from "@/api/user";
 import Cookie from "js-cookie";
-import {User} from "@/pages/User/types";
 import {enc, AES} from 'crypto-js';
 import otherLogin from "@/pages/Login/components/OtherLogin";
-import LoginWay from "./components/LoginWay";
+import UserLogin from "./components/LoginWay";
 
 type loginParamsType = FmLoginType | OldLoginType
 
-const logo = new URL(`@/assets/undraw.svg`, import.meta.url).href;
+const logo = new URL(`@/assets/undraw_login_bg.svg`, import.meta.url).href;
 
 type LoginType = 'phone' | 'account';
 
@@ -25,7 +24,6 @@ export default () => {
     const navigate = useNavigate()
     const [loginType, setLoginType] = useState<LoginType>('account');
     const [login_form] = Form.useForm();
-
     const sendLoginMsg = <T extends loginParamsType>(loginFn: (loginMsg: T) => Promise<AxiosResponse<any>>, login_params: T): Promise<Boolean> => {
         return loginFn(login_params).then((res) => {
             // console.log(res)
@@ -34,7 +32,7 @@ export default () => {
                 message.error(data.message);
             } else {
                 login_form.resetFields()
-                message.success(data.message);
+                // message.success(data.message);
                 const in30Minutes = 1 / 48
                 set_Token('token', in30Minutes)
                 navigate('/')
@@ -49,7 +47,7 @@ export default () => {
         const {username, password, type, remember} = e
         // console.log(remember)
         let loginMsg = {} as loginParamsType
-        if (type === 0) {
+        if (type === 2) {
             loginMsg = {
                 fphone: username,
                 password
@@ -74,6 +72,7 @@ export default () => {
         set_UserInfo(username, AES.encrypt(password, 'sssg'), type, remember)
     }
     useEffect(() => {
+        document.title = '老人跌倒检测系统'
         const remember = Cookie.get('remember') || false
         if (remember) {
             const enUsername = Cookie.get('user_Name') || ''
@@ -93,7 +92,7 @@ export default () => {
 
     }, [])
     return (
-        <div className='bg-white h-screen'>
+        <div className='bg-white h-screen relative animate__animated animate__bounceInLeft'>
             <LoginFormPage
                 form={login_form}
                 backgroundImageUrl={logo}
@@ -104,12 +103,9 @@ export default () => {
                 /*左下角广告*/
                 // activityConfig={activityConfig}
                 /*其他登录方式*/
-                actions={ otherLogin }
+                // actions={otherLogin}
             >
                 <Tabs
-                    tabBarStyle={{
-                        background:'none !important'
-                    }}
                     centered
                     activeKey={loginType}
                     onChange={(activeKey) => setLoginType(activeKey as LoginType)}
@@ -125,14 +121,16 @@ export default () => {
                     ]}
                 >
                 </Tabs>
-                <LoginWay loginType={loginType}/>
-                <div className={'mb-6'}>
+                <UserLogin loginType={loginType}/>
+                <div className={'mb-4 flex-bc'}>
                     <ProFormCheckbox noStyle name="remember">
                         记住密码
                     </ProFormCheckbox>
-                    <a className={'float-right'}>
-                        忘记密码
-                    </a>
+                    <div className={'float-right p-2'}>
+                        <a className='hover:text-blue' onClick={() => navigate('/register')}>注册</a>
+                        {/*&nbsp;|&nbsp;*/}
+                        {/*<a className='hover:text-blue'>忘记密码</a>*/}
+                    </div>
                 </div>
             </LoginFormPage>
         </div>

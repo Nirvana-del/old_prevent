@@ -1,5 +1,6 @@
 import {FmLoginType, RegisterType} from "@/pages/Login/types";
 import request from "@/utils/request";
+import {FamilyInfo} from "@/pages/User/types";
 //家属登录
 export const reqFmLogin = (loginMsg: FmLoginType) => {
     return request({
@@ -33,7 +34,7 @@ export const reqBindFamily = (fmMsg: any) => {
     })
 }
 // 老人解除家属绑定
-export const reqUntieFamily = (fmMsg: any) => {
+export const reqUntieFamily = (fmMsg: Partial<FamilyInfo>) => {
     return request({
         method: 'post',
         url:'/oldFamily/untieFamily',

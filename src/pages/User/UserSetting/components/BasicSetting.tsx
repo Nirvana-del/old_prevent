@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {Avatar, Form, Input} from "antd";
 import Cookie from "js-cookie";
-import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, message, Upload } from 'antd';
 
@@ -12,7 +11,8 @@ const BasicSetting: React.FC = () => {
         const enUsername = Cookie.get('user_Name') || ''
         // setPhone(enUsername)
         form.setFieldsValue({
-            phone: enUsername
+            phone: enUsername,
+            nickname: '山上沙锅'
         })
     },[])
     const props: UploadProps = {
@@ -67,7 +67,7 @@ const BasicSetting: React.FC = () => {
                       src={'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'}
                   />
                   <Upload {...props}>
-                      <Button icon={<UploadOutlined />}>更换头像</Button>
+                      <Button icon={<i className="ri-upload-2-fill mr-2"></i>}>更换头像</Button>
                   </Upload>
               </div>
            </div>

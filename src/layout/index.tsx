@@ -1,12 +1,3 @@
-import {
-    GithubFilled,
-    InfoCircleFilled,
-    PlusCircleFilled,
-    QuestionCircleFilled,
-    SearchOutlined,
-    UserOutlined,
-    PoweroffOutlined
-} from '@ant-design/icons';
 import type {ProSettings} from '@ant-design/pro-components';
 import {
     ProCard,
@@ -21,13 +12,14 @@ import defaultProps from './components/_defaultProps';
 import {useNavigate} from "react-router-dom";
 import {remove_Token} from "@/utils/handleToken";
 import WithLoadingOutlet from "@/components/antd/WithLoadingOutlet";
+import {store} from "@/redux";
+// import MenuCard from "@/layout/components/MenuCard";
 
 const SearchInput = () => {
     const {token} = theme.useToken();
     return (
         <div
-            key="SearchOutlined"
-            aria-hidden
+            aria-hidden="true"
             style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -45,21 +37,18 @@ const SearchInput = () => {
                     backgroundColor: token.colorBgTextHover,
                 }}
                 prefix={
-                    <SearchOutlined
-                        style={{
-                            color: token.colorTextLightSolid,
-                        }}
-                    />
+                    <i className="ri-search-line" style={{
+                        color: token.colorTextLightSolid,
+                    }}></i>
                 }
                 placeholder="搜索方案"
                 bordered={false}
             />
-            <PlusCircleFilled
-                style={{
-                    color: token.colorPrimary,
-                    fontSize: 24,
-                }}
-            />
+            <i className='ri-add-circle-fill text-2xl'
+               style={{
+                   color: token.colorPrimary
+               }}
+            ></i>
         </div>
     );
 };
@@ -80,22 +69,29 @@ const Layout:React.FC =  () => {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-            console.log('退出系统')
             remove_Token()
+            store.dispatch({
+                type: 'CHANGE_TAB_PAGE',
+                payload: '1'
+            })
+            store.dispatch({
+                type: 'CHANGE_BIND_TYPE',
+                payload: 0
+            })
             navigate('/login')
         }
     };
     const menu: MenuProps['items'] = [
-        {
-            key: 'user-center',
-            icon: <UserOutlined/>,
-            label: (
-                <span onClick={() => navigate('/user')}>个人中心</span>
-            ),
-        },
+        // {
+        //     key: 'user-center',
+        //     icon: <UserOutlined/>,
+        //     label: (
+        //         <span onClick={() => navigate('/user/setting')}>个人中心</span>
+        //     ),
+        // },
         {
             key: 'logout',
-            icon: <PoweroffOutlined/>,
+            icon: <i className="ri-shut-down-line"></i>,
             label: (
                 <span onClick={() => {
                     modal.confirm(config)
@@ -110,6 +106,7 @@ const Layout:React.FC =  () => {
                 <ProLayout
                     title={'老人跌倒检测系统'}
                     loading={false}
+                    // siderWidth={256}
                     logo={<i className="ri-bubble-chart-fill text-blue text-4xl"></i>}
                     bgLayoutImgList={[
                         {
@@ -138,7 +135,6 @@ const Layout:React.FC =  () => {
                     siderMenuType="group"
                     menu={{
                         collapsedShowGroupTitle: true,
-
                     }}
                     avatarProps={{
                         src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
@@ -157,9 +153,9 @@ const Layout:React.FC =  () => {
                             props.layout !== 'side' && document.body.clientWidth > 1400 ? (
                                 <SearchInput/>
                             ) : undefined,
-                            <InfoCircleFilled key="InfoCircleFilled"/>,
-                            <QuestionCircleFilled key="QuestionCircleFilled"/>,
-                            <GithubFilled key="GithubFilled"/>,
+                            <i className="ri-information-fill text-lg"></i>,
+                            <i className="ri-question-fill text-lg"></i>,
+                            <i className="ri-github-fill text-lg"></i>,
                         ];
                     }}
                     headerTitleRender={(logo, title, _) => {
@@ -194,7 +190,6 @@ const Layout:React.FC =  () => {
                         return (
                             <div
                                 onClick={() => {
-                                    console.log(item)
                                     navigate(item.path!)
                                     setPathname(item.path || '/welcome');
                                 }}
@@ -205,8 +200,8 @@ const Layout:React.FC =  () => {
                     }}
                     {...settings}
                 >
-                    <PageContainer>
-                        <ProCard className={'min-h-[70vh]'}>
+                    <PageContainer title={false}>
+                        <ProCard className={'min-h-[70vh]'} bordered>
                             <WithLoadingOutlet />
                         </ProCard>
                     </PageContainer>
