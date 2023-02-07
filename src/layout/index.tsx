@@ -1,78 +1,28 @@
-import {
-    GithubFilled,
-    InfoCircleFilled,
-    PlusCircleFilled,
-    QuestionCircleFilled,
-    SearchOutlined,
-    UserOutlined,
-    PoweroffOutlined
-} from '@ant-design/icons';
 import type {ProSettings} from '@ant-design/pro-components';
-import {
-    ProCard,
-    PageContainer,
-    ProConfigProvider,
-    ProLayout,
-    SettingDrawer,
-} from '@ant-design/pro-components';
-import {Input, theme, MenuProps, Modal, Dropdown} from 'antd';
-import React, {useState} from 'react';
-import defaultProps from './components/_defaultProps';
+import {PageContainer, ProCard, ProConfigProvider, ProLayout, SettingDrawer,} from '@ant-design/pro-components';
+import {Dropdown, MenuProps, Modal} from 'antd';
+import React, {useEffect, useState} from 'react';
+import menuRouter from './components/menuRouter';
 import {useNavigate} from "react-router-dom";
-import {remove_Token} from "@/utils/handleToken";
 import WithLoadingOutlet from "@/components/antd/WithLoadingOutlet";
-
-const SearchInput = () => {
-    const {token} = theme.useToken();
-    return (
-        <div
-            key="SearchOutlined"
-            aria-hidden
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginInlineEnd: 24,
-            }}
-            onMouseDown={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-            }}
-        >
-            <Input
-                style={{
-                    borderRadius: 4,
-                    marginInlineEnd: 12,
-                    backgroundColor: token.colorBgTextHover,
-                }}
-                prefix={
-                    <SearchOutlined
-                        style={{
-                            color: token.colorTextLightSolid,
-                        }}
-                    />
-                }
-                placeholder="搜索方案"
-                bordered={false}
-            />
-            <PlusCircleFilled
-                style={{
-                    color: token.colorPrimary,
-                    fontSize: 24,
-                }}
-            />
-        </div>
-    );
-};
+import {store} from "@/redux";
+import {useAuthContext} from "@/components/hooks/useAuthContext";
+import {remove_Token} from "@/utils/autoReLogin";
+import {
+    getThemeStyle,
+    removeAdmin_Fm_OldId,
+    removeAdmin_FmId,
+    removeAdmin_Old_OldId,
+    setThemeStyle
+} from "@/utils/keep-alive";
 
 const Layout:React.FC =  () => {
-    const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({
-        fixSiderbar: true,
-        layout: 'mix',
-        splitMenus: true,
-    });
-
-    const [pathname, setPathname] = useState('/welcome');
-    // const [num, setNum] = useState(40);
+    const {userInfo, pathname, changePathname} = useAuthContext()
+    const [settings, setSetting] = useState<Partial<ProSettings> | undefined>(getThemeStyle());
+    const [phone, setPhone] = useState('');
+    useEffect(() => {
+        setPhone(userInfo?.phone!)
+    },[])
     const [modal, contextHolder] = Modal.useModal();
     const navigate = useNavigate()
     const config = {
@@ -80,22 +30,26 @@ const Layout:React.FC =  () => {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-            console.log('退出系统')
             remove_Token()
+            removeAdmin_FmId()
+            removeAdmin_Fm_OldId()
+            removeAdmin_Old_OldId()
+            changePathname('')
+            store.dispatch({
+                type: 'CHANGE_TAB_PAGE',
+                payload: '1'
+            })
+            store.dispatch({
+                type: 'CHANGE_BIND_TYPE',
+                payload: 0
+            })
             navigate('/login')
         }
     };
     const menu: MenuProps['items'] = [
         {
-            key: 'user-center',
-            icon: <UserOutlined/>,
-            label: (
-                <span onClick={() => navigate('/user')}>个人中心</span>
-            ),
-        },
-        {
             key: 'logout',
-            icon: <PoweroffOutlined/>,
+            icon: <i className="ri-shut-down-line"></i>,
             label: (
                 <span onClick={() => {
                     modal.confirm(config)
@@ -110,6 +64,7 @@ const Layout:React.FC =  () => {
                 <ProLayout
                     title={'老人跌倒检测系统'}
                     loading={false}
+                    // siderWidth={256}
                     logo={<i className="ri-bubble-chart-fill text-blue text-4xl"></i>}
                     bgLayoutImgList={[
                         {
@@ -131,14 +86,13 @@ const Layout:React.FC =  () => {
                             width: '331px',
                         },
                     ]}
-                    {...defaultProps}
+                    {...menuRouter()}
                     location={{
                         pathname,
                     }}
                     siderMenuType="group"
                     menu={{
                         collapsedShowGroupTitle: true,
-
                     }}
                     avatarProps={{
                         src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
@@ -146,7 +100,7 @@ const Layout:React.FC =  () => {
                         title: (
                             <Dropdown menu={{items: menu}} trigger={['click']}>
                                 <div className={'flex-bc'}>
-                                    <span className="h-full flex-cc"> {'山上沙锅'}</span>
+                                    <span className="h-full flex-cc"> {phone}</span>
                                 </div>
                             </Dropdown>
                         ),
@@ -154,12 +108,8 @@ const Layout:React.FC =  () => {
                     actionsRender={(props) => {
                         if (props.isMobile) return [];
                         return [
-                            props.layout !== 'side' && document.body.clientWidth > 1400 ? (
-                                <SearchInput/>
-                            ) : undefined,
-                            <InfoCircleFilled key="InfoCircleFilled"/>,
-                            <QuestionCircleFilled key="QuestionCircleFilled"/>,
-                            <GithubFilled key="GithubFilled"/>,
+                            <i className="ri-information-fill text-lg"></i>,
+                            <i className="ri-question-fill text-lg"></i>,
                         ];
                     }}
                     headerTitleRender={(logo, title, _) => {
@@ -176,7 +126,6 @@ const Layout:React.FC =  () => {
                         return (
                             <>
                                 {defaultDom}
-                                {/*<MenuCard/>*/}
                             </>
                         );
                     }}
@@ -189,14 +138,16 @@ const Layout:React.FC =  () => {
                             </div>
                         );
                     }}
-                    onMenuHeaderClick={(e) => console.log(e)}
+                    onMenuHeaderClick={() => {
+                        changePathname('/home');
+                        navigate('/home')
+                    }}
                     menuItemRender={(item, dom) => {
                         return (
                             <div
                                 onClick={() => {
-                                    console.log(item)
+                                    changePathname(item.path || '/home');
                                     navigate(item.path!)
-                                    setPathname(item.path || '/welcome');
                                 }}
                             >
                                 {dom}
@@ -205,20 +156,21 @@ const Layout:React.FC =  () => {
                     }}
                     {...settings}
                 >
-                    <PageContainer>
-                        <ProCard className={'min-h-[70vh]'}>
+                    <PageContainer title={false}>
+                        <ProCard className={'min-h-[70vh]'} bordered>
                             <WithLoadingOutlet />
                         </ProCard>
                     </PageContainer>
                     <SettingDrawer
                         pathname={pathname}
                         enableDarkTheme
-                        getContainer={() => document.getElementById('app-layout')}
                         settings={settings}
+                        hideHintAlert
+                        hideCopyButton
                         onSettingChange={(changeSetting) => {
+                            setThemeStyle(changeSetting)
                             setSetting(changeSetting);
                         }}
-                        disableUrlParams={false}
                     />
                 </ProLayout>
             </ProConfigProvider>

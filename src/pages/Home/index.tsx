@@ -1,12 +1,24 @@
 import React from 'react'
-// import UserLine from "@/pages/Home/components/UserLine";
-const Home: React.FC = () => {
+import OldUser from "@/pages/Home/OldUser";
+import FmUser from "@/pages/Home/FmUser";
+import {RoleMap} from "@/types/user";
+import {useAuthContext} from "@/components/hooks/useAuthContext";
+import AdminUser from "@/pages/Home/AdminUser";
 
+const Home: React.FC = () => {
+    const {userInfo:{roleType}} = useAuthContext()
     return (
-        <div className='text-3xl font-bold px-4'>
-            主页
-            {/*<UserLine />*/}
-        </div>
+        <>
+            {
+                roleType === RoleMap.OLD && (<> <OldUser /></>)
+            }
+            {
+                roleType === RoleMap.FAMILY && (<> <FmUser /></>)
+            }
+            {
+                roleType === RoleMap.ADMIN && (<> <AdminUser /></>)
+            }
+        </>
 
     )
 }

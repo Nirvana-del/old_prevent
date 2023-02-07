@@ -18,6 +18,10 @@
         @apply flex justify-between items-center;
     }
 
+    .flex-bs {
+        @apply flex justify-between items-start;
+    }
+
     .flex-cc {
         @apply flex justify-center items-center;
     }

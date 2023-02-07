@@ -1,19 +1,19 @@
 import React from 'react'
 import {Navigate, useLocation} from "react-router-dom";
-import {get_Token} from "@/utils/handleToken";
+import {get_Token} from "@/utils/autoReLogin";
 
 type RouteProps = {
     children?: React.ReactNode
 }
 const loginRoute = '/login'
 const indexRoute = '/'
-const allowList = ['/login']
+const allowList = ['/login', '/register']
 
 const AuthRoute: React.FC<RouteProps> = (props) => {
     const location = useLocation();
     const {children} = props
-    let token = get_Token()
-    if(token && token !== 'undefined'){
+    let reLogin_flag = get_Token()
+    if(reLogin_flag && reLogin_flag !== 'undefined'){
         if(location.pathname === loginRoute){
             return <Navigate to={indexRoute}></Navigate>
         } else {

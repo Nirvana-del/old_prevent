@@ -1,25 +1,23 @@
 import React from 'react'
-// import { connect } from 'react-redux'
 import {Outlet} from "react-router-dom";
 import {Spin} from "antd";
+import {connect} from "react-redux";
 
 interface WithLoadingOutletProps {
-  loading?:boolean
+    status?:boolean
 }
 const WithLoadingOutlet: React.FC<WithLoadingOutletProps> = (props) => {
-  // const { loading } = props
-  const loading = false
+  const { status } = props
   return (
-      <Spin size='large' spinning={loading}>
+      <Spin size='large' spinning={status}>
         <Outlet />
       </Spin>
   )
 }
-// const mapStateToProps = (state:any) => {
-//   const { LoadingReducer: { loading } } = state
-//   return {
-//     loading
-//   }
-// }
-// export default connect(mapStateToProps)(WithLoadingOutlet)
-export default WithLoadingOutlet
+const mapStateToProps = (state:any) => {
+  const { LoadingState: { status } } = state
+  return {
+      status
+  }
+}
+export default connect(mapStateToProps)(WithLoadingOutlet)

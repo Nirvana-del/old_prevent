@@ -1,0 +1,85 @@
+#Loading {
+  top : 50%;
+  left:50%;
+  position: absolute;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
+  z-index :100;
+  @-webkit-keyframes ball-beat {
+    20%{
+      opacity: 0.2;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    40%{
+      opacity: 0.4;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    60%{
+      opacity: 0.6;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    80%{
+      opacity: 0.8;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    100% {
+      opacity: 1;
+      -webkit-transform:scale(1);
+      transform:scale(1);}
+  }
+  @keyframes ball-beat {
+    20%{
+      opacity: 0.2;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    40%{
+      opacity: 0.4;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    60%{
+      opacity: 0.6;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    80%{
+      opacity: 0.8;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75); }
+    100% {
+      opacity: 1;
+      -webkit-transform:scale(1);
+      transform:scale(1);}
+  }
+  .ball-beat > div {
+    background-color: #279fcf;
+    width: 10px;
+    height: 10px;
+    border-radius: 100% !important;
+    margin: 2px;
+    -webkit-animation-fill-moae: both;
+    animation-fill-mode: both;
+    display: inline-block;
+    -webkit-animation: ball-beat 1.25s 0s infinite linear;
+    animation: ball-beat 1.25s 0s infinite linear;
+  }
+  .ball-beat > div:nth-child(1) {
+    -webkit-animation-delay: -1s !important;
+    animation-delay: -1s !important;
+  }
+  .ball-beat > div:nth-child(2) {
+    -webkit-animation-delay: -0.75s !important;
+    animation-delay: -0.75s !important;
+  }
+  .ball-beat > div:nth-child(3) {
+    -webkit-animation-delay: -0.5s !important;
+    animation-delay: -0.5s !important;
+  }
+  .ball-beat > div:nth-child(4) {
+    -webkit-animation-delay: -0.25s !important;
+    animation-delay: -0.25s !important;
+  }
+  .ball-beat > div:nth-child(5) {
+    -webkit-animation-delay: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+

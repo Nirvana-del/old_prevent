@@ -1,5 +1,6 @@
 @import "mixin";
 @import "antd";
+@import "tailwind.css";
 /* 自定义全局 CssVar */
 :root {
   @include scrollBar;
@@ -17,6 +18,9 @@
 }
 
 $color:#FFFFFF;
+$color-light-blue: #3b82f6;
+$color-blue: #3b82f6;
+
 
 body{
   background-color: $color;
@@ -32,4 +36,10 @@ img{
 .text-align-last {
   text-align-last: justify;
   width: 60px;
+}
+a{
+  color: $color-blue;
+  &:hover{
+
+  }
 }
