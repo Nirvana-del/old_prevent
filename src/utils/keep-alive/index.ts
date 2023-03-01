@@ -37,7 +37,7 @@ export const removeAdmin_Old_OldId = () => {
 export const setThemeStyle = (themeStyle: object) => {
     localStorage.setItem('themeStyle', JSON.stringify(themeStyle))
 }
-''
+
 export const getThemeStyle = () => {
     const defaultSetting = {
         fixSiderbar: true,

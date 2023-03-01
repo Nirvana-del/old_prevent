@@ -11,5 +11,5 @@ export const set_Token = (token:string, time_limit:number) => {
 }
 
 export const remove_Token = () => {
-    Cookie.remove('token')
+    Cookie.remove('re_login')
 }

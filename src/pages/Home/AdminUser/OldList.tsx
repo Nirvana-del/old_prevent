@@ -72,7 +72,6 @@ const OldList: React.FC = () => {
                             pageSize: 6,
                             hideOnSinglePage: true
                         }}
-
                         renderItem={(item) => {
                             return (
                                 <List.Item

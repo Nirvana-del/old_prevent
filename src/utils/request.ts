@@ -10,7 +10,7 @@ if (import.meta.env.MODE === 'development'){
 }
 const request = axios.create({
     // baseURL,
-    baseURL,
+    baseURL:'http://192.168.108.217:8080',
     timeout: 5000,
     withCredentials:true
 })

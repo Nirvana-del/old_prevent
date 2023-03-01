@@ -5,20 +5,24 @@ import {reqFetchCloudData, reqFetchFamilyData} from "@/api/old_user/data";
 import {ProCard} from "@ant-design/pro-components";
 import {useAuthWebsocket} from "@/components/hooks/useAuthWebsocket";
 import {useHandleScatterData} from "@/pages/Home/hooks";
-
+export enum extraType {
+    'cloudData' = '人体点云信息',
+    'familyData' = '家庭地形数据'
+}
 const CloudData = () => {
     const [cloudData, setCloudData] = useState<Array<ScatterData>>([]);
     const [familyData, setFamilyData] = useState<Array<ScatterData>>([]);
     const getFamilyData = async () => {
         const res = await reqFetchFamilyData()
         let f_data = res.data.data
-        const resArr = useHandleScatterData(f_data, ScatterType.rdist)
+        const resArr = useHandleScatterData(f_data, ScatterType.rdist, extraType.familyData)
         setFamilyData(resArr)
     }
     const getCloudData = async () => {
         const res = await reqFetchCloudData()
         let f_data = res.data.data
-        const resArr = useHandleScatterData(f_data, ScatterType.dist)
+        console.log(f_data)
+        const resArr = useHandleScatterData(f_data, ScatterType.dist, extraType.cloudData)
         setCloudData(resArr)
     }
     useEffect(() => {
@@ -40,7 +44,7 @@ const CloudData = () => {
         xField: 'x坐标',
         yField: 'y坐标',
         shape: 'circle',
-        colorField: 'r(0.5, 0.5, 0.1) 0:#ffffff 1:#1890ff',
+        colorField: 'extraType',
         pointStyle: {
             fillOpacity: 1,
         },

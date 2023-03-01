@@ -2,10 +2,8 @@ import {defineConfig, loadEnv} from 'vite'
 import react from '@vitejs/plugin-react'
 import path from "path"
 
-// https://vitejs.dev/config/
 export default ({mode}) => {
     const env = loadEnv(mode, process.cwd())
-    console.log(env)
     return defineConfig({
         // envDir:  "env",
         plugins: [react()],
@@ -20,7 +18,8 @@ export default ({mode}) => {
             // open: false, //是否在默认浏览器中自动打开该地址
             proxy: { //使用代理
                 [env.VITE_APP_BASE_API]: { //当有 /api开头的地址是，代理到target地址
-                    target: env.VITE_APP_REAL_API, // 需要跨域代理的本地路径
+                    // target: env.VITE_APP_REAL_API, // 需要跨域代理的本地路径
+                    target: 'http://192.168.108.217:8080', // 需要跨域代理的本地路径
                     changeOrigin: true, //是否改变请求源头
                     rewrite: path => {
                         const apiString = env.VITE_APP_BASE_API
